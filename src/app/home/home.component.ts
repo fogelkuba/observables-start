@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from "rxjs/observable";
 import 'rxjs/Rx';
 import {Observer} from 'rxjs/Observer';
@@ -9,7 +9,9 @@ import {Observer} from 'rxjs/Observer';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+
+  
 
   constructor() {
   }
@@ -25,17 +27,18 @@ export class HomeComponent implements OnInit {
     const myObservable = Observable.create((observer: Observer<string>) => {
       setTimeout(() => {
         observer.next('first package')
-      }, 2000)
-      setTimeout(() => {
+        }, 2000)
+        setTimeout(() => {
         observer.next('second package')
-      // }, 4000)
-      // setTimeout(() => {
-      //   observer.error('failed package')
-      // }, 5000)
-      setTimeout(() => {
-        observer.complete()
-      }, 5000)
-    });
+        }, 4000)
+        setTimeout(() => {
+          observer.error('failed package')
+        }, 5000)
+        setTimeout(() => {
+          observer.complete()
+        }, 5000)
+      });
+
 
     myObservable.subscribe(
       (data: string) => { console.log('R: ' + data) },
@@ -43,5 +46,6 @@ export class HomeComponent implements OnInit {
       () => {console.log('completed') }
     )
 
-  }
+
+
 }
